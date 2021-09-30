@@ -8,7 +8,7 @@ import { DatePicker } from '@material-ui/pickers';
 
 import StepsInputForm from './components/StepsInputForm';
 import StepsDisplay from './components/StepsDisplay';
-import footprints from './images/footprints.png'
+import footprints from './images/footprints.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +82,7 @@ const App = () => {
         </Paper>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 export default App;

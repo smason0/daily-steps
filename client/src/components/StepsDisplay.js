@@ -15,7 +15,7 @@ const StepsDisplay = ({ stepCount, isLoading }) => {
       );
 
   return (
-    <div style={{ height: '5rem', display: 'table-cell', verticalAlign: 'middle' }} >
+    <div style={{ height: '5rem', display: 'table-cell', verticalAlign: 'middle' }}>
       {displayContent}
     </div>
   );
