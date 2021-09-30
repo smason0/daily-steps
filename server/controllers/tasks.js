@@ -1,3 +1,4 @@
+const moment = require('moment');
 const StepLog = require('../models/stepLog');
 
 exports.getStepLog = async (req, res) => {
@@ -29,4 +30,23 @@ exports.addStepLog = async (req, res) => {
       }
     }
   );
+}
+
+exports.getPastWeek = async (req, res) => {
+  try {
+    const dates = [];
+    const today = moment();
+    let startDate = moment(req.query.weekOf);
+
+    while (startDate.diff(today) < 0) {
+      dates.push(startDate.format('YYYY-MM-DD'));
+      startDate.add(1, 'days');
+    }
+
+    const stepLogs = await StepLog.find({ 'date': { $in: dates } });
+
+    res.status(200).json(stepLogs);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
 }

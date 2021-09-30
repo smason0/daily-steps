@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Grid, Typography, Paper, AppBar } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
+import moment from 'moment';
 
 import StepsInputForm from './components/StepsInputForm';
 import StepsDisplay from './components/StepsDisplay';
@@ -43,7 +44,7 @@ const App = () => {
   const classes = useStyles();
 
   const getSimpleDate = (date) => {
-    return date.toISOString().slice(0,10);
+    return moment(date).format('YYYY-MM-DD');
   }
 
   const logDate = getSimpleDate(selectedDate);
