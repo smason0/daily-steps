@@ -39,6 +39,37 @@ const stepsLogReducer = (state = initialState, action) => {
         loading: true,
       }
     }
+    case 'LOAD_WEEKLY_STEPS': {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case 'LOAD_WEEKLY_STEPS_SUCCESS': {
+      const { stepsLogs } = action;
+
+      const newStepsLogs = { ...state.stepsLogs };
+
+      stepsLogs.forEach((stepsLog) => {
+        newStepsLogs[stepsLog.date] = { stepCount: stepsLog.stepCount };
+      });
+
+      return {
+        ...state,
+        stepsLogs: {
+          ...state.stepsLogs,
+          ...newStepsLogs,
+        },
+        loading: false,
+      }
+    }
+    case 'LOAD_WEEKLY_STEPS_FAILED': {
+      return {
+        ...state,
+        loading: false,
+        error: true,
+      }
+    }
     case 'CREATE_STEPS_LOG_SUCCESS': {
       const { newStepsLog } = action;
       return {

@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import stepsLogReducer from '../reducers/stepsLogReducers';
 import loadStepsLogSagas from '../sagas/loadStepsLogSagas';
+import loadWeeklyStepsSagas from '../sagas/loadWeeklyStepsSagas';
 import createStepsLogSagas from '../sagas/createStepsLogSagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -16,6 +17,6 @@ const store: Store<any, any> = createStore(
 
 export default store;
 
-const sagas = [...loadStepsLogSagas, ...createStepsLogSagas];
+const sagas = [...loadStepsLogSagas, ...loadWeeklyStepsSagas, ...createStepsLogSagas];
 
 sagas.map(saga => sagaMiddleware.run(saga));

@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux';
 import { Grid, Typography, Paper, AppBar } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
-import moment from 'moment';
 
 import StepsInputForm from './components/StepsInputForm';
 import StepsDisplay from './components/StepsDisplay';
+import StepsChart from './components/StepsChart';
 import footprints from './images/footprints.png';
+import { getSimpleDate, getSimpleStartOfWeek, getStepsForDate, getWeeklyStepsData } from './helpers/dataHelpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,16 +44,10 @@ const App = () => {
 
   const classes = useStyles();
 
-  const getSimpleDate = (date) => {
-    return moment(date).format('YYYY-MM-DD');
-  }
-
   const logDate = getSimpleDate(selectedDate);
-  const stepCount = useSelector((state) => (
-    state.stepsLogState &&
-    state.stepsLogState.stepsLogs &&
-    state.stepsLogState.stepsLogs[logDate] &&
-    state.stepsLogState.stepsLogs[logDate].stepCount));
+  const weekOfDate = getSimpleStartOfWeek(selectedDate);
+  const stepCount = useSelector((state) => getStepsForDate(state, logDate));
+  const weeklySteps = useSelector((state) => getWeeklyStepsData(state, weekOfDate));
   const loading = useSelector((state) => state.stepsLogState?.loading);
 
   return (
@@ -79,6 +74,9 @@ const App = () => {
           </Grid>
           <Grid item xs={12}>
             <StepsInputForm logDate={logDate} stepCount={stepCount} isLoading={loading} />
+          </Grid>
+          <Grid item xs={12}>
+            <StepsChart logDate={logDate} weekOfDate={weekOfDate} weeklySteps={weeklySteps} />
           </Grid>
         </Paper>
       </Grid>
